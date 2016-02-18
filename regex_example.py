@@ -4,15 +4,14 @@ import dateutil
 import pandas as pd
 import matplotlib.pyplot as plt
 
-patterns = {
-"longdt_name_message":"(?P<datetime>\d{1,2}\s{1}\w{3}(\s{1}|\s{1}\d{4}\s{1})\d{2}:\d{2})\s{1}-\s{1}(?P<name>(.*?)):\s{1}(?P<message>(.*?))$",
-"shortdt_name_message":"(?P<datetime>\d{2}/\d{2}/\d{4},\s{1}\d{2}:\d{2})\s{1}-\s{1}(?P<name>(.*?)):\s{1}(?P<message>(.*?))$"
+
+date_patterns = {
+"long_datetime" : "(?P<datetime>\d{1,2}\s{1}\w{3}(\s{1}|\s{1}\d{4}\s{1})\d{2}:\d{2})",
+"short_datetime" : "(?P<datetime>\d{2}/\d{2}/\d{4},\s{1}\d{2}:\d{2})"
 }
 
-action_patterns = {
-"longdt_action":"(?P<datetime>\d{1,2}\s{1}\w{3}(\s{1}|\s{1}\d{4}\s{1})\d{2}:\d{2})\s{1}-\s{1}(?P<action>(.*?))$",
-"shortdt_action":"(?P<datetime>\d{2}/\d{2}/\d{4},\s{1}\d{2}:\d{2})\s{1}-\s{1}(?P<action>(.*?))$"
-}
+message_pattern = "\s{1}-\s{1}(?P<name>(.*?)):\s{1}(?P<message>(.*?))$"
+action_pattern = "\s{1}-\s{1}(?P<action>(.*?))$"
 
 action_strings = {
 "admin": "admin",
@@ -44,14 +43,14 @@ class Chat:
 
 class Parser:
     def parse_message(self,str):
-        for key in patterns:
-            m = re.match(patterns[key], str)
+        for pattern in map(lambda x:x+message_pattern, date_patterns.values()):
+            m = re.match(pattern, str)
             if m:
                 return (m.group('datetime'), m.group('name'), m.group('message'), None)
 
         # if code comes here, message is continuation or action
-        for key in action_patterns:
-            m = re.match(action_patterns[key], str)
+        for pattern in map(lambda x:x+action_pattern, date_patterns.values()):
+            m = re.match(pattern, str)
             if m:
                 if any(action_string in m.group('action') for action_string in action_strings.values()):
                     for pattern in map(lambda x: "(?P<name>(.*?))"+x+"(.*?)", action_strings.values()):
