@@ -9,6 +9,8 @@ The script will first try to parse the uploaded chat history file (.txt) using [
 
 Then it will produce an ugly but simple chart of some statistics from the messages dataframe. I have not work on analytics on the Whatsapp actions yet, will probably do so when I have more free time :) 
 
+![Sample Chart](./sample_chart.png)
+
 ### Regex Patterns for dates
 ```python
 date_patterns = {
@@ -27,8 +29,8 @@ message_pattern = "\s{1}-\s{1}(?P<name>(.*?)):\s{1}(?P<message>(.*?))$"
 action_pattern = "\s{1}-\s{1}(?P<action>(.*?))$"
 ```
 
-
-![Sample Chart](./sample_chart.png)
+### How to add more regex patterns for dates
+Simply add more key value pairs in the date_patterns dictionary.
 
 ### How to use script?
 
