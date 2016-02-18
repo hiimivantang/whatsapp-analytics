@@ -15,8 +15,13 @@ Then it will produce an ugly but simple chart of some statistics from the messag
 
 TODO
 
+### Credits
+Special thanks to [D|Science][4], I used his code for generating the charts.
+
+
 
 
 [1]: http://www.wired.com/2016/01/whatsapp-is-nearing-a-billion-users-now-its-time-to-find-the-money/
 [2]: https://en.wikipedia.org/wiki/Regular_expression
 [3]: http://pandas.pydata.org/
+[4]: http://dscience.co.uk/whatsapp-ening-text-analytics-with-a-whatsapp-message-log/
